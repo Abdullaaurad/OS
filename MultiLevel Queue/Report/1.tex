@@ -3,6 +3,79 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{subcaption}
+\usepackage{xcolor} 
+\usepackage{sectsty}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{amssymb}
+\usepackage{adjustbox}
+\usepackage{tocloft}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % Internal links
+    urlcolor=blue, % External links
+    citecolor=blue, % Citations
+}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Adds dots between sections and page numbers
+\setlength{\cftbeforesecskip}{0.5em} % Adjusts space before sections in the table of contents
+\setlength{\cftsecindent}{0em} % Adjusts indentation for sections in the table of contents
+\setlength{\cftsecnumwidth}{2.5em} % Adjusts width for section numbers in the table of contents
+
+% Customization of itemize environments
+\setlist[itemize]{label=$\bullet$, topsep=0.5em, itemsep=0em, leftmargin=*} % Adjusts itemize environment formatting
+
+% Define a light gray color for code background
+\definecolor{light-gray}{gray}{0.95}
+
+% Define a new environment for code display
+\lstnewenvironment{cppcode}[1][]{
+    \lstset{
+        backgroundcolor=\color{light-gray},
+        frame=lines,
+        basicstyle=\ttfamily,
+        breaklines=true,
+        columns=fullflexible,
+        postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+        captionpos=b,
+        #1 % Additional options for listings can be passed here
+    }
+}{}
+
+\definecolor{codebackground}{rgb}{0.95,0.95,0.95}
+\definecolor{commentgreen}{RGB}{34,139,24}
+
+\lstset{
+    language=C++,
+    backgroundcolor=\color{codebackground},
+    basicstyle=\large\ttfamily,
+    commentstyle=\color{commentgreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{purple}, % Color for strings
+    numbers=left,
+    numberstyle=\tiny\color{brown},
+    stepnumber=1,
+    numbersep=5pt,
+    frame=tb,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    % Custom colors for brackets using literate
+    literate=
+        {<}{{\textcolor{green}{<}}}1
+        {-}{{\textcolor{green}{-}}}1
+        {>}{{\textcolor{green}{>}}}1
+        {[}{{\textcolor{orange}{[}}}1
+        {]}{{\textcolor{orange}{]}}}1
+        {\{}{{\textcolor{blue}{\{}}}1
+        {\}}{{\textcolor{blue}{\}}}}1
+}
+
+
 \title{\Huge Assignment 8-Multilevel Queue Scheduling}
 \author{22000021}
 \date{\today}
@@ -11,13 +84,27 @@
 \maketitle
 \newpage
 
+\tableofcontents
+\newpage
+
 \section{Introduction}
-This program aims to simulate a multilevel queue scheduling algorithm, a crucial aspect of operating system design, where processes are organized into priority-based queues. With four distinct queues assigned priorities from q0 to q3, the algorithm employs different scheduling strategies tailored to each queue's priority level. Specifically, Round Robin (RR) scheduling is used for q0, while Shortest Job First (SJF) scheduling is employed for q1 and q2, and First-In-First-Out (FIFO) scheduling for q3. Each queue is allocated a time quantum of 20 seconds, after which the CPU switches between queues. The program prompts users to input the number of processes and their respective priorities for each queue, facilitating dynamic simulation scenarios. Through this simulation, we aim to analyze the efficiency and performance of various scheduling algorithms under differing workload conditions, providing valuable insights for optimizing system scheduling strategies.
+
+Your introduction is quite comprehensive and covers all the essential aspects of the code. However, if you'd like to enhance it further, you might consider incorporating a bit more detail or emphasizing specific points. Here's a slightly refined version of your introduction:
+
+This program serves as a simulation of a multilevel queue scheduling algorithm, a critical component in the realm of operating system design. It organizes processes into priority-based queues, with four distinct queues labeled q0 to q3. Each queue is assigned a unique scheduling strategy tailored to its priority level: 
+\begin{center}
+  \begin{description}
+      \item Round Robin (RR): Scheduling for q0
+      \item Shortest Job First (SJF): Scheduling for q1 and q2
+      \item First-In-First-Out (FIFO): Scheduling for q3
+  \end{description}
+\end{center}  
+The time quantum for each queue is set at 20 seconds, after which the CPU switches between queues to execute processes. By prompting users to input the number of processes and their priorities for each queue, the program facilitates dynamic simulation scenarios. The primary objective of this simulation is to analyze the efficiency and performance of various scheduling algorithms under varying workload conditions. This analysis aims to provide valuable insights into optimizing system scheduling strategies for enhanced operational efficiency.
 
 
 \section{Methodology}
 \vspace{\baselineskip}
-In this section, we will examine the implementation details of the algorithm.
+The Methodology section of this report delves into the implementation details of the provided C code, which revolves around process and queue management. The code is designed to simulate a multilevel queue scheduling algorithm, a fundamental aspect of operating system design. The methodology is organized into several subsections, each focusing on different aspects of the code's implementation. These subsections include Process Implementation, which covers the structure and properties of processes; Queue Operations, detailing the functions for queue management such as enqueue, dequeue, and queue status checks; and Process Initialization, explaining how processes are initialized and added to the corresponding queues based on user input. Through a comprehensive exploration of these components, this report aims to provide a thorough understanding of the code's functionality and its relevance in the context of process and queue management in operating systems.
 
 \subsection{Process Implementation}
 \vspace{\baselineskip}
@@ -25,31 +112,135 @@ The multilevel queue scheduling algorithm is implemented using \textbf{C++}’s 
 The ’Process’ structure represents a process with properties such as process ID, burst time, remaining time, wait time Turnaround time. 
 The ’Queue’ structure represents a queue with properties such as front, rear, and an array to hold the processes
 For the implementation purpose, I have used the maximum number of processes in the queue as 100
+\\
+\begin{lstlisting}
+#define MAX_SIZE 100
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth,]{1.png}
-    \caption{Structures}
-    \label{fig:example}
-\end{figure}
+struct Process{
+    int Id;                                
+    int BurstTime;                        
+    int RemainingTime;                    
+    int WaiteTime;                        
+    int TurnaroundTime;                   
+};
 
-\newpage
+struct Queue{                             
+    int Rear;                             
+    int Front;                            
+    struct Process* list[MAX_SIZE];       
+};
+
+int time=0;
+
+\end{lstlisting}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \texttt{MAX\_SIZE}: Defines the maximum number of processes that the program can handle.
+  
+  \item \texttt{struct Process}:
+  \begin{itemize}[label=--]
+      \item \texttt{Id}: Represents the unique identifier or ID of the process.
+      \item \texttt{BurstTime}: Indicates the time taken by the process to execute or its burst time.
+      \item \texttt{RemainingTime}: Represents the remaining time needed for the process to complete its execution.
+      \item \texttt{WaitTime}: Stores the total waiting time of the process.
+      \item \texttt{TurnaroundTime}: Stores the total time taken for the process from submission to completion.
+  \end{itemize}
+  
+  \item \texttt{struct Queue}:
+  \begin{itemize}[label=--]
+      \item \texttt{Rear}: Represents the rear index of the queue.
+      \item \texttt{Front}: Represents the front index of the queue.
+      \item \texttt{list[MAX\_SIZE]}: An array of pointers to \texttt{Process} structures.
+  \end{itemize}
+  
+  \item \texttt{int time}: Keeps track of the global time in the program.
+\end{enumerate}
+
+\vspace{1\baselineskip}
 \subsection{Queue Operations}
 \vspace{\baselineskip}
-The queue operations such as enqueue, dequeue, and checking if the queue is empty or full are implemented as functions.
-The scheduling algorithms for each queue are implemented as separate functions.
-The the functions IsFull and IsEmpty returns true or false and the Enqueue and Dequeue operation do the inserting and deletion in the queue
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth,]{2.png}
-\end{figure}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth,]{3.png}
-    \caption{Queue}
-    \label{fig:nw}
-\end{figure}
+The code segment encapsulates essential functionalities for managing processes within a queue and scheduling algorithms.\\
+The IsEmpty and IsFull functions ascertain the status of the queue, determining whether it is empty or full, crucial for maintaining queue integrity during enqueue and dequeue operations.\\
+Enqueue and Dequeue functions handle the insertion and deletion of processes from the queue, respectively, ensuring proper queue management. Additionally.\\
+The MIN function identifies the process with the minimum remaining time in the queue, facilitating scheduling decisions.\\
+Index\textunderscore{}Dequeue function further refines dequeue operations by allowing removal of processes at specific index in the queue.\\
+These functions collectively form the backbone of process and queue management, essential for implementing efficient scheduling strategies and ensuring smooth program execution.\\
+
+
+\begin{lstlisting}
+bool IsEmpty(struct Queue* Q) {                                 
+  return ((Q->Front==-1)||(Q->Rear==-1));
+}
+
+
+bool IsFull(struct Queue* Q) {                                  
+  return (Q->Rear+1)%MAX_SIZE==Q->Front;
+}
+
+
+void Enqueue(struct Queue* Q,struct Process* p){                 
+    if(IsFull(Q)){
+        printf("No space in the Queue\n");
+    }
+    else{
+        if(IsEmpty(Q)){
+            Q->Front=0;
+        }
+        Q->Rear=(Q->Rear+1)%MAX_SIZE;
+        Q->list[Q->Rear]=p;
+    }
+}
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[caption={Queue Operations}, label={lst:queue_operations},firstnumber=23]
+void Dequeue(struct Queue* Q){                                   
+    if(IsEmpty(Q)){
+        printf("The Queue is empty\n");
+    }
+    else{
+        if(Q->Rear==Q->Front){
+            Q->Rear=-1;
+            Q->Front=-1;
+        }
+        else{
+            Q->Front=(Q->Front+1)%MAX_SIZE;
+        }
+    }
+}
+
+
+int MIN(struct Queue* Q){
+    if(IsEmpty(Q)){
+        return -1;
+    }
+    int min_Index=Q->Front;
+    for(int i=Q->Front;i<=Q->Rear;i++){
+        if(Q->list[min_Index]->RemainingTime>Q->list[i]->RemainingTime){
+            min_Index=i;
+        }
+    }
+    return min_Index;
+}
+
+
+void Index_Dequeue(struct Queue *Q,int index){
+    if(IsEmpty(Q)){
+        return;
+    }
+    else{
+        if(index==Q->Front){
+            Dequeue(Q);
+        }
+        else{
+            for(int i=index;i>Q->Front;i--){
+                Q->list[i]=Q->list[i-1];
+            }
+            Q->Front++;
+        }
+    }
+}
+\end{lstlisting}
 
 \newpage
 Enqueue and Dequeue are the same operations following a circular queue.delete is a variation of dequeue, where the dequeued process will be enqueued to the same queue.
@@ -61,13 +252,47 @@ Enqueue and Dequeue are the same operations following a circular queue.delete is
 For the code to work without any interrupts we ask for the user to enter the count of the process that will be processed In c++ we cant do that without user inputs 
 The code for initialization of the process after the detail for the process has been input we store the process temporarily to a user define variable and than that process is added to the corresponding queue
 
-\vspace{\baselineskip}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{4.png}
-    \caption{Queue}
-    \label{fig:ne}
-\end{figure}
+\begin{lstlisting}
+int n;
+    printf("Enter the number of process to enter =");
+    scanf("%d",&n);
+    printf("\n");
+
+    struct Queue Q0 = {.Rear = -1, .Front = -1};
+    struct Queue Q1 = {.Rear = -1, .Front = -1};
+    struct Queue Q2 = {.Rear = -1, .Front = -1};
+    struct Queue Q3 = {.Rear = -1, .Front = -1};
+
+    for(int i=0;i<n;i++){
+        int k;
+        struct Process* P=(struct Process*) malloc (sizeof(struct Process));
+        printf("Enter the process Id =");
+        scanf("%d",&P->Id);
+        printf("Enter the burst time of the process =");
+        scanf("%d",&P->BurstTime);
+        P->RemainingTime=P->BurstTime;
+        printf("Enter the priority of the process=");
+        scanf("%d",&k);
+        printf("\n");
+        while(k<0 || k>4){                                                               //To check the priority of the process
+            printf("Priority is wrong. Enter again: ");
+            scanf("%d",&k);
+            printf("\n");
+        }
+        if(k==0){
+            Enqueue(&Q0,P);
+        }
+        else if(k==1){
+            Enqueue(&Q1,P);
+        }
+        else if(k==2){
+            Enqueue(&Q2,P);
+        }
+        else if(k==3){
+            Enqueue(&Q3,P);
+        }
+    }
+\end{lstlisting}
 
 \newpage
 This part of the code initializes four separate queues (Q0, Q1, Q2, and Q3) representing different priority levels in a multilevel queue scheduling algorithm. It first prompts the user to input the number of processes to enter. Then, it iterates n times to input details for each process, such as process ID, burst time, and priority.
@@ -87,6 +312,33 @@ Overall, this section of the code facilitates the dynamic creation and enqueuing
     \item If a process's remaining time exceeds the Robin slice, the Robin slice is subtracted from its remaining time, and the global time is updated accordingly. The process remains in the queue for further execution
     \item This process continues until the quantum slice is exhausted or the queue becomes empty.
 \end{itemize}
+
+\begin{lstlisting}[basicstyle=\footnotesize]
+
+void RR(struct Queue* Q){ 
+  int timeQuantum=20/size;
+  printf("timeQuantum =%d\n",timeQuantum);
+  for(int i=Q->Front;i<=Q->Rear;i++){
+    if(Q->list[i]->RemainingTime<=timeQuantum){
+      int t=time;
+      time=time+Q->list[i]->RemainingTime;
+      printf("Process %d executed from time %d to %d\n", Q->list[i]->Id,t,time);
+      Q->list[i]->TurnaroundTime=time;
+      Q->list[i]->WaiteTime=Q->list[i]->TurnaroundTime-Q->list[i]->BurstTime;
+      printf("The waiting time of the process =%d\n",Q->list[i]->WaiteTime);
+      printf("The turnaround time of the process =%d\n\n",Q->list[i]->TurnaroundTime);
+      Index_Dequeue(Q,i);
+    } 
+    else{
+      int t=time;
+      time=time+timeQuantum;
+      printf("Process %d executed from time %d to %d\n", Q->list[i]->Id,t,time);
+      Q->list[i]->RemainingTime=Q->list[i]->RemainingTime-timeQuantum;
+      printf("There is a remaining burst time of %d\n\n",Q->list[i]->RemainingTime);
+    }   
+  }
+}
+\end{lstlisting}
 
 \vspace{\baselineskip}
 \subsection{SJF (Shortest Job First) Scheduling Algorithm}
