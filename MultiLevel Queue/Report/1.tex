@@ -12,6 +12,8 @@
 \usepackage{adjustbox}
 \usepackage{tocloft}
 \usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 \hypersetup{
     colorlinks=true,
@@ -66,9 +68,6 @@
     tabsize=4,
     % Custom colors for brackets using literate
     literate=
-        {<}{{\textcolor{green}{<}}}1
-        {-}{{\textcolor{green}{-}}}1
-        {>}{{\textcolor{green}{>}}}1
         {[}{{\textcolor{orange}{[}}}1
         {]}{{\textcolor{orange}{]}}}1
         {\{}{{\textcolor{blue}{\{}}}1
@@ -340,6 +339,7 @@ void RR(struct Queue* Q){
 }
 \end{lstlisting}
 
+\newpage
 \vspace{\baselineskip}
 \subsection{SJF (Shortest Job First) Scheduling Algorithm}
 \begin{itemize}
@@ -349,10 +349,198 @@ void RR(struct Queue* Q){
     \item Executing the Process: Once selected, the chosen process is dispatched for execution on the CPU. The CPU executes the process until it completes its entire burst time.
 \end{itemize}
 \vspace{\baselineskip}
+
+
+\begin{lstlisting}[basicstyle=\footnotesize]
+void SJF(struct Queue *Q){
+    int k=time;
+    while(time<(k+20)){
+        int index=MIN(Q);
+        if(index>-1){
+            int temp=Q->list[index]->RemainingTime;
+            if(k+20-time>=temp){
+                printf("Process %d executed from time %d to %d\n", Q->list[index]->Id, time, time + temp);
+                time=time+temp;
+                Q->list[index]->TurnaroundTime=time;
+                Q->list[index]->WaiteTime=Q->list[index]->TurnaroundTime-Q->list[index]->BurstTime;
+                printf("The waiting time of the process =%d\n",Q->list[index]->WaiteTime);
+                printf("The turnaround time of the process =%d\n\n",Q->list[index]->TurnaroundTime);
+                Index_Dequeue(Q,index);
+                if(IsEmpty(Q) || time==k+20){
+                    return;
+                }
+            }
+            else{
+                printf("Process %d executed from time %d to %d\n", Q->list[index]->Id,time,k+20);
+                Q->list[index]->RemainingTime-=(k+20-time);
+                printf("There is a remaining burst time of %d\n",Q->list[index]->RemainingTime);
+                time=k+20;
+            }
+        }
+    }
+    return;
+}
+\end{lstlisting}
+
 \subsection{FIFO (First In First Out) Scheduling Algorithm}
 \begin{itemize}
-    \item The process are executed in the order they are enqueued into the Queue just how the Queue algorithm works
+    \item The process are executed in the order they are Entered into the queue.
+    \item if the Execution time exceeds the available time the process only runs the available time.
+    \item the process waits until the control is given to process again in the processor
 \end{itemize}
+
+\begin{lstlisting}[basicstyle=\footnotesize]
+    void FIFO(struct Queue* Q){ 
+        int k=time;
+        while (time<(k+20) && !IsEmpty(Q)) {
+            int temp = Q->list[Q->Front]->RemainingTime;
+            if (temp <= 20) {
+                printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + temp);
+                time += temp;
+                Q->list[Q->Front]->TurnaroundTime = time;
+                Q->list[Q->Front]->WaiteTime = Q->list[Q->Front]->TurnaroundTime - Q->list[Q->Front]->BurstTime;
+                printf("The waiting time of the process = %d\n", Q->list[Q->Front]->WaiteTime);
+                printf("The turnaround time of the process = %d\n\n", Q->list[Q->Front]->TurnaroundTime);
+                Dequeue(Q);
+            } else {
+                printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + 20);
+                Q->list[Q->Front]->RemainingTime -= 20;
+                printf("There is a remaining burst time of %d\n\n", Q->list[Q->Front]->RemainingTime);
+                time += 20;
+            }
+        }
+    }
+\end{lstlisting}
+
+\section{Results}
+In this section lets see how different scheduling algorithms works for same processes using different criteria.
+\vspace{\baselineskip}
+\subsection{First In First Out}
+
+\vspace{\baselineskip}
+\hspace{1cm}
+\begin{minipage}[t]{0.3\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Process ID} & \textbf{Burst Time}\\
+    \hline
+    P1 & 9 \\
+    P2 & 11 \\
+    P3 & 4 \\
+    P4 & 8 \\
+    P5 & 20 \\
+    P6 & 1 \\
+    P7 & 13 \\
+    P8 & 6 \\
+    P9 & 2 \\
+    P10 & 21 \\
+    P11 & 5 \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+\hspace{2cm}
+\begin{minipage}[t!]{0.35\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Average waiting Time} & 1 \\
+    \hline
+    \textbf{Average Turnaround Time} & 2 \\
+    \hline
+    \textbf{Average response Time} & 3 \\
+    \hline
+    \textbf{Total Time} & 4 \\
+    \hline
+    \textbf{throughput} & 5 \\
+    \hline
+    \textbf{Fairness} & No \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+
+\subsection{Shortest Job First}
+
+\vspace{\baselineskip}
+\hspace{1cm}
+\begin{minipage}[t]{0.3\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Process ID} & \textbf{Burst Time}\\
+    \hline
+    P1 & 9 \\
+    P2 & 11 \\
+    P3 & 4 \\
+    P4 & 8 \\
+    P5 & 20 \\
+    P6 & 1 \\
+    P7 & 13 \\
+    P8 & 6 \\
+    P9 & 2 \\
+    P10 & 21 \\
+    P11 & 5 \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+\hspace{2cm}
+\begin{minipage}[t!]{0.35\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Average waiting Time} & 1 \\
+    \hline
+    \textbf{Average Turnaround Time} & 2 \\
+    \hline
+    \textbf{Average response Time} & 3 \\
+    \hline
+    \textbf{Total Time} & 4 \\
+    \hline
+    \textbf{throughput} & 5 \\
+    \hline
+    \textbf{Fairness} & No \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+
+\subsection{Round Robin}
+
+\vspace{\baselineskip}
+\hspace{1cm}
+\begin{minipage}[t]{0.3\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Process ID} & \textbf{Burst Time}\\
+    \hline
+    P1 & 9 \\
+    P2 & 11 \\
+    P3 & 4 \\
+    P4 & 8 \\
+    P5 & 20 \\
+    P6 & 1 \\
+    P7 & 13 \\
+    P8 & 6 \\
+    P9 & 2 \\
+    P10 & 21 \\
+    P11 & 5 \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+\hspace{2cm}
+\begin{minipage}[t!]{0.35\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{Average waiting Time} & 1 \\
+    \hline
+    \textbf{Average Turnaround Time} & 2 \\
+    \hline
+    \textbf{Average response Time} & 3 \\
+    \hline
+    \textbf{Total Time} & 4 \\
+    \hline
+    \textbf{throughput} & 5 \\
+    \hline
+    \textbf{Fairness} & No \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+
 
 \newpage
 \section{Pros and Cons of Scheduling Algorithms}
@@ -402,49 +590,6 @@ void RR(struct Queue* Q){
       \end{tabular}
   }
 \end{table}
-
-
-\section{Results}
-This example covers the execution of the 4 queues. The time quantum in the example is taken as 8 for the sake of simplicity
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{|c|c|c|c|}
-      \hline
-      \textbf{Process ID} & \textbf{Priority Number} & \textbf{Burst Time (s)} \\
-      \hline
-      P1 & 0 & 9 \\
-      P2 & 0 & 3 \\
-      P3 & 1 & 4 \\
-      P4 & 1 & 3 \\
-      P5 & 1 & 2 \\
-      P6 & 2 & 1 \\
-      P7 & 2 & 13 \\
-      P8 & 2 & 6 \\
-      P9 & 3 & 2 \\
-      P10 & 3 & 4 \\
-      P11 & 3 & 5 \\
-      \hline
-  \end{tabular}
-  \caption{Process Information}
-  \label{tab:process_info}
-\end{table}
-
-\begin{figure}[t!]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{5.png}
-    \caption{Queue 1}
-    \label{fig:queue1}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{6.png}
-    \caption{Queue 2}
-    \label{fig:queue2}
-  \end{subfigure}
-  \caption{Code output}
-  \label{fig:both_queues}
-\end{figure}
 
 \clearpage
 \newpage
