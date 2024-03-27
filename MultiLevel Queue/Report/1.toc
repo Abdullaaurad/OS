@@ -10,11 +10,11 @@
 \contentsline {section}{\numberline {4}Results}{9}{section.4}%
 \contentsline {subsection}{\numberline {4.1}First In First Out}{9}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Shortest Job First}{9}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Round Robin}{9}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Pros and Cons of Scheduling Algorithms}{10}{section.5}%
-\contentsline {section}{\numberline {6}Conclusion}{11}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Round Robin Scheduling Algorithm}{11}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Shortest Job First Scheduling Algorithm}{11}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}First In First Out Scheduling Algorithm}{11}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}Multi Level Queue Scheduling Algorithm}{11}{subsection.6.4}%
-\contentsline {section}{\numberline {7}Program Limitations}{11}{section.7}%
+\contentsline {subsection}{\numberline {4.3}Round Robin}{10}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Pros and Cons of Scheduling Algorithms}{11}{section.5}%
+\contentsline {section}{\numberline {6}Conclusion}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Round Robin Scheduling Algorithm}{12}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Shortest Job First Scheduling Algorithm}{12}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}First In First Out Scheduling Algorithm}{12}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Multi Level Queue Scheduling Algorithm}{12}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Program Limitations}{12}{section.7}%

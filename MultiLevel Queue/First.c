@@ -89,7 +89,7 @@ void FIFO(struct Queue* Q){
     int k=time;
     while (time<(k+20) && !IsEmpty(Q)) {
         int temp = Q->list[Q->Front]->RemainingTime;
-        if (temp <= 20) {
+        if (k+20-time>=temp) {
             printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + temp);
             time += temp;
             Q->list[Q->Front]->TurnaroundTime = time;
@@ -98,10 +98,10 @@ void FIFO(struct Queue* Q){
             printf("The turnaround time of the process = %d\n\n", Q->list[Q->Front]->TurnaroundTime);
             Dequeue(Q);
         } else {
-            printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + 20);
-            Q->list[Q->Front]->RemainingTime -= 20;
+            printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time,k+20);
+            Q->list[Q->Front]->RemainingTime -=(k+20-time);
             printf("There is a remaining burst time of %d\n\n", Q->list[Q->Front]->RemainingTime);
-            time += 20;
+            time=k+20;
         }
     }
 }

@@ -14,12 +14,16 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+
 
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue, % Internal links
-    urlcolor=blue, % External links
-    citecolor=blue, % Citations
+    linkcolor=black, % Internal links
+    urlcolor=black, % External links
+    citecolor=black, % Citations
 }
 
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Adds dots between sections and page numbers
@@ -49,6 +53,8 @@
 
 \definecolor{codebackground}{rgb}{0.95,0.95,0.95}
 \definecolor{commentgreen}{RGB}{34,139,24}
+\definecolor{darkblue}{rgb}{0.4, 0.4, 1}
+\definecolor{lightblue}{rgb}{0.8, 0.8, 1}
 
 \lstset{
     language=C++,
@@ -390,26 +396,26 @@ void SJF(struct Queue *Q){
 \end{itemize}
 
 \begin{lstlisting}[basicstyle=\footnotesize]
-    void FIFO(struct Queue* Q){ 
-        int k=time;
-        while (time<(k+20) && !IsEmpty(Q)) {
-            int temp = Q->list[Q->Front]->RemainingTime;
-            if (temp <= 20) {
-                printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + temp);
-                time += temp;
-                Q->list[Q->Front]->TurnaroundTime = time;
-                Q->list[Q->Front]->WaiteTime = Q->list[Q->Front]->TurnaroundTime - Q->list[Q->Front]->BurstTime;
-                printf("The waiting time of the process = %d\n", Q->list[Q->Front]->WaiteTime);
-                printf("The turnaround time of the process = %d\n\n", Q->list[Q->Front]->TurnaroundTime);
-                Dequeue(Q);
-            } else {
-                printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + 20);
-                Q->list[Q->Front]->RemainingTime -= 20;
-                printf("There is a remaining burst time of %d\n\n", Q->list[Q->Front]->RemainingTime);
-                time += 20;
-            }
+void FIFO(struct Queue* Q){ 
+    int k=time;
+    while (time<(k+20) && !IsEmpty(Q)) {
+        int temp = Q->list[Q->Front]->RemainingTime;
+        if (temp <= 20) {
+            printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time, time + temp);
+            time += temp;
+            Q->list[Q->Front]->TurnaroundTime = time;
+            Q->list[Q->Front]->WaiteTime = Q->list[Q->Front]->TurnaroundTime - Q->list[Q->Front]->BurstTime;
+            printf("The waiting time of the process = %d\n", Q->list[Q->Front]->WaiteTime);
+            printf("The turnaround time of the process = %d\n\n", Q->list[Q->Front]->TurnaroundTime);
+            Dequeue(Q);
+        } else {
+            printf("Process %d executed from time %d to %d\n", Q->list[Q->Front]->Id, time,k+ 20);
+            Q->list[Q->Front]->RemainingTime -=(k+20-time);
+            printf("There is a remaining burst time of %d\n\n", Q->list[Q->Front]->RemainingTime);
+            time=k+20;
         }
     }
+}
 \end{lstlisting}
 
 \section{Results}
@@ -419,22 +425,32 @@ In this section lets see how different scheduling algorithms works for same proc
 
 \vspace{\baselineskip}
 \hspace{1cm}
+
 \begin{minipage}[t]{0.3\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
+    \rowcolor{darkblue}
     \textbf{Process ID} & \textbf{Burst Time}\\
     \hline
+    \rowcolor{lightblue}
     P1 & 9 \\
     P2 & 11 \\
+    \rowcolor{lightblue}
     P3 & 4 \\
     P4 & 8 \\
+    \rowcolor{lightblue}
     P5 & 20 \\
     P6 & 1 \\
+    \rowcolor{lightblue}
     P7 & 13 \\
     P8 & 6 \\
+    \rowcolor{lightblue}
     P9 & 2 \\
     P10 & 21 \\
+    \rowcolor{lightblue}
     P11 & 5 \\
+    P12 & 12 \\
+    \rowcolor{lightblue}
     \hline
     \end{tabularx}
 \end{minipage}
@@ -442,20 +458,53 @@ In this section lets see how different scheduling algorithms works for same proc
 \begin{minipage}[t!]{0.35\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
-    \textbf{Average waiting Time} & 1 \\
+    \rowcolor{darkblue}
+    \textbf{Metric} & \textbf{Value} \\
     \hline
-    \textbf{Average Turnaround Time} & 2 \\
-    \hline
-    \textbf{Average response Time} & 3 \\
-    \hline
-    \textbf{Total Time} & 4 \\
-    \hline
-    \textbf{throughput} & 5 \\
-    \hline
-    \textbf{Fairness} & No \\
+    \rowcolor{lightblue}
+    Average waiting Time & 1 \\
+    Average Turnaround Time & 2 \\
+    \rowcolor{lightblue}
+    Average response Time & 3 \\
+    Total Time & 4 \\
+    \rowcolor{lightblue}
+    Throughput & 5 \\
+    Fairness & No \\
     \hline
     \end{tabularx}
 \end{minipage}
+
+\bigskip
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{darkblue}
+    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    \hline
+    \multirow{2}{*}{1} & P1 & 0 - 9 & 0 & 9 & 0 \\
+    & P2 & 9 - 20 & 9 & 20 & 0 \\
+    \hline
+    \multirow{3}{*}{2} & P3 & 20 - 24 & 20 & 24 & 0 \\
+    & P4 & 24 - 32 & 24 & 32 & 0 \\
+    & P5 & 32 - 40 & 32 & 40 & 12 \\
+    \hline
+    \multirow{3}{*}{3} & P5 & 40 - 52 & 40 & 52 & 0 \\
+    & P6 & 52 - 53 & 52 & 53 & 0 \\
+    & P7 & 53 - 60 & 53 & 60 & 6 \\
+    \hline
+    \multirow{4}{*}{4} & P7 & 60 - 66 & 60 & 66 & 0 \\
+    & P8 & 66 - 72 & 66 & 72 & 0 \\
+    & P9 & 72 - 74 & 72 & 74 & 0 \\
+    & P10 & 74 - 80 & 74 & 80 & 15 \\
+    \hline
+    \multirow{2}{*}{5} & P10 & 80 - 95 & 80 & 95 & 0 \\
+    & P11 & 95 - 100 & 95 & 100 & 0 \\
+    \hline
+    \multirow{1}{*}{6} & P12 & 100 - 112 & 100 & 112 & 0 \\
+    \hline
+    \end{tabular}
+\end{center}
 
 \subsection{Shortest Job First}
 
@@ -464,19 +513,28 @@ In this section lets see how different scheduling algorithms works for same proc
 \begin{minipage}[t]{0.3\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
+    \rowcolor{darkblue}
     \textbf{Process ID} & \textbf{Burst Time}\\
     \hline
+    \rowcolor{lightblue}
     P1 & 9 \\
     P2 & 11 \\
+    \rowcolor{lightblue}
     P3 & 4 \\
     P4 & 8 \\
+    \rowcolor{lightblue}
     P5 & 20 \\
     P6 & 1 \\
+    \rowcolor{lightblue}
     P7 & 13 \\
     P8 & 6 \\
+    \rowcolor{lightblue}
     P9 & 2 \\
     P10 & 21 \\
+    \rowcolor{lightblue}
     P11 & 5 \\
+    P12 & 12 \\
+    \rowcolor{lightblue}
     \hline
     \end{tabularx}
 \end{minipage}
@@ -484,41 +542,82 @@ In this section lets see how different scheduling algorithms works for same proc
 \begin{minipage}[t!]{0.35\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
-    \textbf{Average waiting Time} & 1 \\
+    \rowcolor{darkblue}
+    \textbf{Metric} & \textbf{Value} \\
     \hline
-    \textbf{Average Turnaround Time} & 2 \\
-    \hline
-    \textbf{Average response Time} & 3 \\
-    \hline
-    \textbf{Total Time} & 4 \\
-    \hline
-    \textbf{throughput} & 5 \\
-    \hline
-    \textbf{Fairness} & No \\
+    \rowcolor{lightblue}
+    Average waiting Time & 1 \\
+    Average Turnaround Time & 2 \\
+    \rowcolor{lightblue}
+    Average response Time & 3 \\
+    Total Time & 4 \\
+    \rowcolor{lightblue}
+    Throughput & 5 \\
+    Fairness & No \\
     \hline
     \end{tabularx}
 \end{minipage}
 
-\subsection{Round Robin}
+\bigskip
 
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{darkblue}
+    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    \hline
+    \multirow{2}{*}{1} & P1 & 0 - 9 & 0 & 9 & 0 \\
+    & P2 & 9 - 20 & 9 & 20 & 0 \\
+    \hline
+    \multirow{3}{*}{2} & P3 & 20 - 24 & 20 & 24 & 0 \\
+    & P4 & 24 - 32 & 24 & 32 & 0 \\
+    & P5 & 32 - 40 & 32 & 40 & 12 \\
+    \hline
+    \multirow{3}{*}{3} & P5 & 40 - 52 & 40 & 52 & 0 \\
+    & P6 & 52 - 53 & 52 & 53 & 0 \\
+    & P7 & 53 - 60 & 53 & 60 & 6 \\
+    \hline
+    \multirow{4}{*}{4} & P7 & 60 - 66 & 60 & 66 & 0 \\
+    & P8 & 66 - 72 & 66 & 72 & 0 \\
+    & P9 & 72 - 74 & 72 & 74 & 0 \\
+    & P10 & 74 - 80 & 74 & 80 & 15 \\
+    \hline
+    \multirow{2}{*}{5} & P10 & 80 - 95 & 80 & 95 & 0 \\
+    & P11 & 95 - 100 & 95 & 100 & 0 \\
+    \hline
+    \multirow{1}{*}{6} & P12 & 100 - 112 & 100 & 112 & 0 \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\subsection{Round Robin}
 \vspace{\baselineskip}
 \hspace{1cm}
 \begin{minipage}[t]{0.3\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
+    \rowcolor{darkblue}
     \textbf{Process ID} & \textbf{Burst Time}\\
     \hline
+    \rowcolor{lightblue}
     P1 & 9 \\
     P2 & 11 \\
+    \rowcolor{lightblue}
     P3 & 4 \\
     P4 & 8 \\
+    \rowcolor{lightblue}
     P5 & 20 \\
     P6 & 1 \\
+    \rowcolor{lightblue}
     P7 & 13 \\
     P8 & 6 \\
+    \rowcolor{lightblue}
     P9 & 2 \\
     P10 & 21 \\
+    \rowcolor{lightblue}
     P11 & 5 \\
+    P12 & 12 \\
+    \rowcolor{lightblue}
     \hline
     \end{tabularx}
 \end{minipage}
@@ -526,21 +625,53 @@ In this section lets see how different scheduling algorithms works for same proc
 \begin{minipage}[t!]{0.35\textwidth}
     \begin{tabularx}{\textwidth}{|l|X|}
     \hline
-    \textbf{Average waiting Time} & 1 \\
+    \rowcolor{darkblue}
+    \textbf{Metric} & \textbf{Value} \\
     \hline
-    \textbf{Average Turnaround Time} & 2 \\
-    \hline
-    \textbf{Average response Time} & 3 \\
-    \hline
-    \textbf{Total Time} & 4 \\
-    \hline
-    \textbf{throughput} & 5 \\
-    \hline
-    \textbf{Fairness} & No \\
+    \rowcolor{lightblue}
+    Average waiting Time & 1 \\
+    Average Turnaround Time & 2 \\
+    \rowcolor{lightblue}
+    Average response Time & 3 \\
+    Total Time & 4 \\
+    \rowcolor{lightblue}
+    Throughput & 5 \\
+    Fairness & No \\
     \hline
     \end{tabularx}
 \end{minipage}
 
+\bigskip
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{darkblue}
+    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    \hline
+    \multirow{2}{*}{1} & P1 & 0 - 9 & 0 & 9 & 0 \\
+    & P2 & 9 - 20 & 9 & 20 & 0 \\
+    \hline
+    \multirow{3}{*}{2} & P3 & 20 - 24 & 20 & 24 & 0 \\
+    & P4 & 24 - 32 & 24 & 32 & 0 \\
+    & P5 & 32 - 40 & 32 & 40 & 12 \\
+    \hline
+    \multirow{3}{*}{3} & P5 & 40 - 52 & 40 & 52 & 0 \\
+    & P6 & 52 - 53 & 52 & 53 & 0 \\
+    & P7 & 53 - 60 & 53 & 60 & 6 \\
+    \hline
+    \multirow{4}{*}{4} & P7 & 60 - 66 & 60 & 66 & 0 \\
+    & P8 & 66 - 72 & 66 & 72 & 0 \\
+    & P9 & 72 - 74 & 72 & 74 & 0 \\
+    & P10 & 74 - 80 & 74 & 80 & 15 \\
+    \hline
+    \multirow{2}{*}{5} & P10 & 80 - 95 & 80 & 95 & 0 \\
+    & P11 & 95 - 100 & 95 & 100 & 0 \\
+    \hline
+    \multirow{1}{*}{6} & P12 & 100 - 112 & 100 & 112 & 0 \\
+    \hline
+    \end{tabular}
+\end{center}
 
 \newpage
 \section{Pros and Cons of Scheduling Algorithms}
