@@ -1,23 +1,9 @@
 \documentclass{article}
 \usepackage[margin=0.5in]{geometry}
-\usepackage{graphicx}
-\usepackage{multirow}
-\usepackage{subcaption}
-\usepackage{xcolor} 
-\usepackage{sectsty}
-\usepackage{listings}
-\usepackage{enumitem}
-\usepackage{needspace}
-\usepackage{amssymb}
-\usepackage{adjustbox}
-\usepackage{tocloft}
-\usepackage{hyperref}
-\usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
+\usepackage{graphicx,multirow,subcaption,xcolor,sectsty,array}
+\usepackage{listings,enumitem,needspace,amssymb,multirow}
+\usepackage{adjustbox,tocloft,hyperref,tabularx,booktabs}
 \usepackage[table]{xcolor}
-
 
 \hypersetup{
     colorlinks=true,
@@ -462,13 +448,16 @@ In this section lets see how different scheduling algorithms works for same proc
     \textbf{Metric} & \textbf{Value} \\
     \hline
     \rowcolor{lightblue}
-    Average waiting Time & 1 \\
-    Average Turnaround Time & 2 \\
+    Average waiting Time & 58.08 \\
+    Average Turnaround Time & 67.42 \\
     \rowcolor{lightblue}
-    Average response Time & 3 \\
-    Total Time & 4 \\
+    Average response Time & 58.08 \\
+    CPU Utilization & 100\% \\
     \rowcolor{lightblue}
-    Throughput & 5 \\
+    Context Switches & 0 \\
+    Total Time & 112 \\
+    \rowcolor{lightblue}
+    Throughput & 0.1071 \\
     Fairness & No \\
     \hline
     \end{tabularx}
@@ -480,29 +469,32 @@ In this section lets see how different scheduling algorithms works for same proc
     \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     \rowcolor{darkblue}
-    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Process Finish Cycle}} \\
+    \hline \rowcolor{lightblue}
+    P1 & 0 - 9 & 0 & 9 & 1\\
     \hline
-    \multirow{2}{*}{1} & P1 & 0 - 9 & 0 & 9 & 0 \\
-    & P2 & 9 - 20 & 9 & 20 & 0 \\
+    P2 & 9 - 20 & 9 & 20 & 1 \\
+    \hline \rowcolor{lightblue}
+    P3 & 20 - 24 & 20 & 24 & 2 \\
     \hline
-    \multirow{3}{*}{2} & P3 & 20 - 24 & 20 & 24 & 0 \\
-    & P4 & 24 - 32 & 24 & 32 & 0 \\
-    & P5 & 32 - 40 & 32 & 40 & 12 \\
+    P4 & 24 - 32 & 24 & 32 & 2 \\
+    \hline \rowcolor{lightblue}
+    P5 & 32 - 52 & 32 & 52 & 3 \\
     \hline
-    \multirow{3}{*}{3} & P5 & 40 - 52 & 40 & 52 & 0 \\
-    & P6 & 52 - 53 & 52 & 53 & 0 \\
-    & P7 & 53 - 60 & 53 & 60 & 6 \\
+    P6 & 52 - 53 & 52 & 53 & 3 \\
+    \hline \rowcolor{lightblue}
+    P7 & 53 - 66 & 53 & 66 & 4 \\
     \hline
-    \multirow{4}{*}{4} & P7 & 60 - 66 & 60 & 66 & 0 \\
-    & P8 & 66 - 72 & 66 & 72 & 0 \\
-    & P9 & 72 - 74 & 72 & 74 & 0 \\
-    & P10 & 74 - 80 & 74 & 80 & 15 \\
+    P8 & 66 - 72 & 66 & 72 & 4 \\
+    \hline \rowcolor{lightblue}
+    P9 & 72 - 74 & 72 & 74 & 4 \\
     \hline
-    \multirow{2}{*}{5} & P10 & 80 - 95 & 80 & 95 & 0 \\
-    & P11 & 95 - 100 & 95 & 100 & 0 \\
+    P10 & 74 - 95 & 74 & 95 & 5 \\
+    \hline \rowcolor{lightblue}
+    P11 & 95 - 100 & 95 & 100 & 5 \\
     \hline
-    \multirow{1}{*}{6} & P12 & 100 - 112 & 100 & 112 & 0 \\
-    \hline
+    P12 & 100 - 112 & 100 & 112 & 6 \\
+    \hline \rowcolor{lightblue}
     \end{tabular}
 \end{center}
 
@@ -546,13 +538,16 @@ In this section lets see how different scheduling algorithms works for same proc
     \textbf{Metric} & \textbf{Value} \\
     \hline
     \rowcolor{lightblue}
-    Average waiting Time & 1 \\
-    Average Turnaround Time & 2 \\
+    Average waiting Time & 37 \\
+    Average Turnaround Time & 39.17 \\
     \rowcolor{lightblue}
-    Average response Time & 3 \\
-    Total Time & 4 \\
+    Average response Time & 37 \\
+    CPU Utilization & 100\% \\
     \rowcolor{lightblue}
-    Throughput & 5 \\
+    Context Switches & 0 \\
+    Total Time & 112 \\
+    \rowcolor{lightblue}
+    Throughput & 0.1071 \\
     Fairness & No \\
     \hline
     \end{tabularx}
@@ -564,31 +559,32 @@ In this section lets see how different scheduling algorithms works for same proc
     \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     \rowcolor{darkblue}
-    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Process Finish Cycle}} \\
+    \hline \rowcolor{lightblue}
+    P6 & 0 - 1 & 0 & 1 & 1 \\
+    \hline 
+    P9 & 1 - 3 & 1 & 3 & 1 \\
+    \hline \rowcolor{lightblue}
+    P3 & 3 - 7 & 3 & 7 & 1 \\
     \hline
-    \multirow{6}{*}{1} & P6 & 0 - 1 & 0 & 1 & 0 \\
-    & P9 & 1 - 3 & 1 & 3 & 0 \\
-    & P3 & 3 - 7 & 3 & 7 & 0 \\
-    & P11 & 7 - 12 & 7 & 12 & 0 \\
-    & P8 & 12 - 18 & 12 & 18 & 0 \\
-    & P4 & 18 - 20 & 18 & 20 & 6 \\
+    P11 & 7 - 12 & 7 & 12 & 1 \\
+    \hline \rowcolor{lightblue}
+    P8 & 12 - 18 & 12 & 18 & 1 \\
     \hline
-    \multirow{3}{*}{2} & P4 & 20 - 26 & 20 & 26 & 0 \\
-    & P1 & 26 - 35 & 26 & 35 & 0 \\
-    & P2 & 35 - 40 & 35 & 40 & 6 \\
+    P4 & 18 - 26 & 18 & 26 & 2 \\
+    \hline \rowcolor{lightblue}
+    P1 & 26 - 35 & 26 & 35 & 2 \\
     \hline
-    \multirow{3}{*}{3} & P2 & 40 - 46 & 40 & 46 & 0 \\
-    & P12 & 46 - 58 & 46 & 58 & 0 \\
-    & P7 & 58 - 60 & 58 & 60 & 11 \\
+    P2 & 35 - 46 & 35 & 46 & 3 \\
+    \hline \rowcolor{lightblue}
+    P12 & 46 - 58 & 46 & 58 & 3 \\
     \hline
-    \multirow{2}{*}{4} & P7 & 60 - 71 & 60 & 71 & 0 \\
-    & P5 & 71 - 80 & 71 & 80 & 11 \\
+    P7 & 58 - 71 & 58 & 71 & 4 \\
+    \hline \rowcolor{lightblue}
+    P5 & 71 - 91 & 80 & 91 & 5 \\
     \hline
-    \multirow{2}{*}{5} & P5 & 80 - 91 & 80 & 91 & 0 \\
-    & P10 & 91 - 100 & 91 & 100 & 12 \\
-    \hline
-    \multirow{1}{*}{6} & P10 & 100 - 112 & 100 & 112 & 0 \\
-    \hline
+    P10 & 91 - 112 & 100 & 112 & 6 \\
+    \hline \rowcolor{lightblue}
     \end{tabular}
 \end{center}
 
@@ -631,17 +627,21 @@ In this section lets see how different scheduling algorithms works for same proc
     \textbf{Metric} & \textbf{Value} \\
     \hline
     \rowcolor{lightblue}
-    Average waiting Time & 1 \\
-    Average Turnaround Time & 2 \\
+    Average waiting Time & 37 \\
+    Average Turnaround Time & 39.17 \\
     \rowcolor{lightblue}
-    Average response Time & 3 \\
-    Total Time & 4 \\
+    Average response Time & 37 \\
+    CPU Utilization & 100\% \\
     \rowcolor{lightblue}
-    Throughput & 5 \\
+    Context Switches & 0 \\
+    Total Time & 112 \\
+    \rowcolor{lightblue}
+    Throughput & 0.1071 \\
     Fairness & No \\
     \hline
     \end{tabularx}
 \end{minipage}
+
 
 \bigskip
 
@@ -649,28 +649,29 @@ In this section lets see how different scheduling algorithms works for same proc
     \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     \rowcolor{darkblue}
-    {\textbf{Cycle No}} & {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Remaining Burst}} \\
+    {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Process Finish Cycle}} \\
     \hline
-    \multirow{2}{*}{1} & P1 & 0 - 9 & 0 & 9 & 0 \\
-    & P2 & 9 - 20 & 9 & 20 & 0 \\
+    P6 & 5 - 6 & 5 & 6 & 1 \\
     \hline
-    \multirow{3}{*}{2} & P3 & 20 - 24 & 20 & 24 & 0 \\
-    & P4 & 24 - 32 & 24 & 32 & 0 \\
-    & P5 & 32 - 40 & 32 & 40 & 12 \\
+    P9 & 18 - 20 & 18 & 20 & 2 \\
     \hline
-    \multirow{3}{*}{3} & P5 & 40 - 52 & 40 & 52 & 0 \\
-    & P6 & 52 - 53 & 52 & 53 & 0 \\
-    & P7 & 53 - 60 & 53 & 60 & 6 \\
+    P3 & 27 - 29 & 25 & 29 & 3 \\
     \hline
-    \multirow{4}{*}{4} & P7 & 60 - 66 & 60 & 66 & 0 \\
-    & P8 & 66 - 72 & 66 & 72 & 0 \\
-    & P9 & 72 - 74 & 72 & 74 & 0 \\
-    & P10 & 74 - 80 & 74 & 80 & 15 \\
+    P8 & 24 - 32 & 24 & 32 & 0 \\
     \hline
-    \multirow{2}{*}{5} & P10 & 80 - 95 & 80 & 95 & 0 \\
-    & P11 & 95 - 100 & 95 & 100 & 0 \\
+    P5 & 49 -  & 32 & 40 & 12 \\
     \hline
-    \multirow{1}{*}{6} & P12 & 100 - 112 & 100 & 112 & 0 \\
+    P5 & 40 - 52 & 40 & 52 & 0 \\
+    P6 & 52 - 53 & 52 & 53 & 0 \\
+    P7 & 53 - 60 & 53 & 60 & 6 \\
+    \hline
+    P8 & 66 - 72 & 66 & 72 & 0 \\
+    P9 & 72 - 74 & 72 & 74 & 0 \\
+    P10 & 74 - 80 & 74 & 80 & 15 \\
+    \hline
+    P11 & 95 - 100 & 95 & 100 & 0 \\
+    \hline
+    P12 & 100 - 112 & 100 & 112 & 0 \\
     \hline
     \end{tabular}
 \end{center}
