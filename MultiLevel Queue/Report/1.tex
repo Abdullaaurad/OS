@@ -405,7 +405,31 @@ void FIFO(struct Queue* Q){
 \end{lstlisting}
 
 \section{Results}
-In this section lets see how different scheduling algorithms works for same processes using different criteria.
+In this section lets see how different scheduling algorithms works for same set of process work for different scheduling algorithm we have represented throughput the document.
+Following are the process scheduling algorithm optimization criteria 
+\begin{itemize}
+    \item Average waiting Time
+        \begin{itemize}[label= ]
+            \item
+        \end{itemize}
+    \item Average Turnaround Time
+    \begin{itemize}[label= ]
+        \item
+    \end{itemize}
+    \item Average response Time
+    \begin{itemize}[label= ]
+        \item
+    \end{itemize}
+    \item Throughput
+    \begin{itemize}[label= ]
+        \item
+    \end{itemize}
+    \item CPU Utilization
+    \begin{itemize}[label= ]
+        \item
+    \end{itemize}
+\end{itemize}
+
 \vspace{\baselineskip}
 \subsection{First In First Out}
 
@@ -615,7 +639,7 @@ In this section lets see how different scheduling algorithms works for same proc
     \rowcolor{lightblue}
     P11 & 5 \\
     P12 & 12 \\
-    \rowcolor{lightblue}
+     
     \hline
     \end{tabularx}
 \end{minipage}
@@ -637,7 +661,7 @@ In this section lets see how different scheduling algorithms works for same proc
     Total Time & 112 \\
     \rowcolor{lightblue}
     Throughput & 0.1071 \\
-    Fairness & No \\
+    Fairness & yes \\
     \hline
     \end{tabularx}
 \end{minipage}
@@ -649,32 +673,104 @@ In this section lets see how different scheduling algorithms works for same proc
     \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     \rowcolor{darkblue}
-    {\textbf{Process}} &{\textbf{Execution Time}} & {\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Process Finish Cycle}} \\
-    \hline
-    P6 & 5 - 6 & 5 & 6 & 1 \\
-    \hline
-    P9 & 18 - 20 & 18 & 20 & 2 \\
-    \hline
-    P3 & 27 - 29 & 25 & 29 & 3 \\
-    \hline
-    P8 & 24 - 32 & 24 & 32 & 0 \\
-    \hline
-    P5 & 49 -  & 32 & 40 & 12 \\
-    \hline
-    P5 & 40 - 52 & 40 & 52 & 0 \\
-    P6 & 52 - 53 & 52 & 53 & 0 \\
-    P7 & 53 - 60 & 53 & 60 & 6 \\
-    \hline
-    P8 & 66 - 72 & 66 & 72 & 0 \\
-    P9 & 72 - 74 & 72 & 74 & 0 \\
-    P10 & 74 - 80 & 74 & 80 & 15 \\
-    \hline
-    P11 & 95 - 100 & 95 & 100 & 0 \\
-    \hline
-    P12 & 100 - 112 & 100 & 112 & 0 \\
-    \hline
+    {\textbf{Process}} &{\textbf{Waiting Time}} & {\textbf{Turnaround Time}} & {\textbf{Process Finish Cycle}} & {\textbf{Time quantum}} \\
+    \hline \rowcolor{lightblue}
+    P6 & 5 & 6 & 1 & 1\\
+    \hline 
+    P9 & 18 & 20 & 2 & 1\\
+    \hline \rowcolor{lightblue}
+    P3 & 25 & 29 & 3 & 2\\
+    \hline 
+    P8 & 49 & 55 & 4 & 2 \\
+    \hline \rowcolor{lightblue}
+    P11 & 53 & 58 & 4 & 2 \\
+    \hline 
+    P4 & 58 & 66 & 5 & 2 \\
+    \hline \rowcolor{lightblue}
+    P1 & 66 & 75 & 6 & 3 \\
+    \hline 
+    P2 & 67 & 78 & 6 & 3 \\
+    \hline \rowcolor{lightblue}
+    P7 & 84 & 97 & 7 & 5 \\
+    \hline 
+    P12 & 91 & 103 & 7 & 5 \\
+    \hline \rowcolor{lightblue}
+    P5 & 87 & 107 & 8 & 10 \\
+    \hline 
+    P10 & 91 & 112 & 8 & 10 \\
+    \hline \rowcolor{lightblue}
     \end{tabular}
 \end{center}
+
+\subsection{Multilevel Queue}
+\vspace{\baselineskip}
+\hspace{1cm}
+\begin{minipage}[t]{0.3\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \rowcolor{darkblue}
+    \textbf{Process ID} & \textbf{Burst Time}\\
+    \hline
+    \rowcolor{lightblue}
+    P1 & 9 \\
+    P2 & 11 \\
+    \rowcolor{lightblue}
+    P3 & 4 \\
+    P4 & 8 \\
+    \rowcolor{lightblue}
+    P5 & 20 \\
+    P6 & 1 \\
+    \rowcolor{lightblue}
+    P7 & 13 \\
+    P8 & 6 \\
+    \rowcolor{lightblue}
+    P9 & 2 \\
+    P10 & 21 \\
+    \rowcolor{lightblue}
+    P11 & 5 \\
+    P12 & 12 \\
+    \rowcolor{lightblue}
+    P13 & 25 \\
+    P14 & 15 \\
+    \rowcolor{lightblue}
+    P15 & 7 \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+\hspace{2cm}
+\begin{minipage}[t!]{0.3\textwidth}
+    \begin{tabularx}{\textwidth}{|l|X|}
+\hline
+    \rowcolor{darkblue}
+    \textbf{Process ID} & \textbf{Burst Time}\\
+    \hline
+    \rowcolor{lightblue}
+    P16 & 18 \\
+    P17 & 3 \\
+    \rowcolor{lightblue}
+    P18 & 29 \\
+    P19 & 22 \\
+    \rowcolor{lightblue}
+    P20 & 14 \\
+    P21 & 19 \\
+    \rowcolor{lightblue}
+    P22 & 10 \\
+    P23 & 27 \\
+    \rowcolor{lightblue}
+    P24 & 26 \\
+    P25 & 17 \\
+    \rowcolor{lightblue}
+    P26 & 23 \\
+    P27 & 28 \\
+    \rowcolor{lightblue}
+    P28 & 16 \\
+    P29 & 24 \\
+    \rowcolor{lightblue}
+    P30 & 30 \\
+    \hline
+    \end{tabularx}
+\end{minipage}
+\bigskip
 
 \newpage
 \section{Pros and Cons of Scheduling Algorithms}

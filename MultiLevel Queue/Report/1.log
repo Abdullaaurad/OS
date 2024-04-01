@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.12) (preloaded format=pdflatex 2024.2.25)  29 MAR 2024 17:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.12) (preloaded format=pdflatex 2024.2.25)  1 APR 2024 19:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -528,12 +528,12 @@ File: omlcmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <8> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 312.
- [7] [8] [9] [10]
-Underfull \hbox (badness 1394) in paragraph at lines 725--725
+ [7] [8] [9] [10] [11]
+Underfull \hbox (badness 1394) in paragraph at lines 821--821
 []\OT1/cmr/m/n/10 potentially higher av-er-age wait-ing
  []
 
-[11] [12
+[12] [13
 
 ] (1.aux)
  ***********
@@ -545,20 +545,20 @@ L3 programming layer <2024-01-04>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `1.out' has not changed.
-(rerunfilecheck)             Checksum: 306182134EA688FC28956AED016DB81C;3712.
+(rerunfilecheck)             Checksum: 55A0F5573F6C742E6A1FFD985357CFE8;3853.
  ) 
 Here is how much of TeX's memory you used:
- 15664 strings out of 474486
- 248769 string characters out of 5742811
+ 15667 strings out of 474486
+ 248806 string characters out of 5742811
  2065542 words of memory out of 5000000
- 37494 multiletter control sequences out of 15000+600000
+ 37495 multiletter control sequences out of 15000+600000
  566905 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,14n,97p,1065b,1426s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Abdulla\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm0800.pk><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/Abdulla/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on 1.pdf (12 pages, 247034 bytes).
+Output written on 1.pdf (13 pages, 249809 bytes).
 PDF statistics:
- 482 PDF objects out of 1000 (max. 8388607)
- 241 named destinations out of 1000 (max. 500000)
- 161 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 492 PDF objects out of 1000 (max. 8388607)
+ 243 named destinations out of 1000 (max. 500000)
+ 169 words of extra memory for PDF output out of 10000 (max. 10000000)
 
